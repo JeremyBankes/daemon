@@ -4,6 +4,11 @@ const timer = {
 
     Timer: class {
 
+        /**
+         * Creates a timer synchronized to the latest hour.
+         * @param {number} interval 
+         * @param {function} callback 
+         */
         constructor(interval = 3600 * 1000, callback) {
             this.interval = interval;
             this.callback = callback;
@@ -12,7 +17,7 @@ const timer = {
 
         start() {
             if (this.timerId !== null) throw new Error('Timer already running.');
-            this.prepare();
+            return this.prepare();
         }
 
         stop() {
@@ -28,11 +33,11 @@ const timer = {
             const lastHour = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours()));
             const elapsedSinceLastHour = now.getTime() - lastHour.getTime();
             const delay = this.interval - elapsedSinceLastHour % this.interval;
-            console.log(core.time.toDurationString(delay, true));
             this.timerId = setTimeout(() => {
                 this.callback();
                 if (this.timerId) this.prepare();
             }, delay);
+            return delay;
         }
 
     }
