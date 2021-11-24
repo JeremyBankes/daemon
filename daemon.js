@@ -1,5 +1,3 @@
-const core = require('../core/core.js');
-
 const timer = {
 
     Timer: class {
@@ -23,7 +21,6 @@ const timer = {
         stop() {
             if (this.timerId !== null) {
                 clearTimeout(this.timerId);
-                console.log('Cleared timeout');
             }
             this.timerId = null;
         }
